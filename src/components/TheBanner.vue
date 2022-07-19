@@ -42,7 +42,16 @@
 }
 @media screen and (max-width: 992px) {
   .masthead {
-    height: 400px;
+    height: 300px;
+  }
+  .typing {
+    width: 21ch;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #ea8484;
+    font-size: 1.5em;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0 1rem;
   }
 }
 </style>

@@ -8,31 +8,37 @@ const props = defineProps({
     type: String,
     default: 'icon',
   },
-  color: {
+  normal: {
     type: String,
     default: '#333',
+  },
+  hover: {
+    type: String,
+    default: '#ea8484',
   },
   className: {
     type: String,
   },
 })
+const color = ref('')
 const svgName = computed(() => `#/${props.prefix}-${props.name}`)
 const svgClass = computed(() => (props.className ? 'svg-icon ' + props.className : 'svg-icon'))
+
+onMounted(() => {
+  color.value = props.normal
+})
 </script>
 
 <template>
-  <svg :class="svgClass">
+  <svg :class="svgClass" @mouseenter="color = hover" @mouseleave="color = normal">
     <use :xlink:href="svgName" :fill="color" />
   </svg>
 </template>
 
 <style lang="scss">
 .svg-icon {
-  width: 100%;
-  height: 100%;
   max-width: 100px;
   max-height: 100px;
-  fill: currentColor;
   overflow: hidden;
 }
 </style>

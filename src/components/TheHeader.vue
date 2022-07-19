@@ -2,7 +2,7 @@
 
 <template>
   <nav
-    class="navbar navbar-expand-md navbar-light border-bottom shadow-lg is-narrow sticky-top py-3"
+    class="bg-white navbar navbar-expand-md navbar-light border-bottom shadow-lg is-narrow sticky-top py-3"
   >
     <div class="container">
       <div class="d-flex">
