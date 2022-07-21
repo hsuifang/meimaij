@@ -390,9 +390,9 @@ $spacers: (
   // 4: $spacer * 1.5,
   // 5: $spacer * 3,
   0: 0,
-  1: $spacer / 4,
+  1: $spacer * 0.25,
   // 4px
-  2: $spacer / 2,
+  2: $spacer * 0.5,
   // 8px
   3: $spacer,
   // 16px
