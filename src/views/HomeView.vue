@@ -95,7 +95,7 @@
           class="col-6 col-md-3 mb-3"
           v-for="i in 8"
           :key="i"
-          v-animate="{ name: 'fadeInDown', delay: `${0.9 * (i + 1)}s` }"
+          v-animate="{ name: 'fadeInDown', delay: `${i > 4 ? '1.2s' : '0.8s'}` }"
         >
           <ProductCard />
         </div>
@@ -204,5 +204,9 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <section>
+    <TheFooter />
   </section>
 </template>
