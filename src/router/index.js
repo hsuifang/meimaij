@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Layout from '../layout/TheLayout.vue'
 import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -6,9 +7,27 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
+      name: 'layout',
+      component: Layout,
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: HomeView,
+        },
+        {
+          path: '/shop-list',
+          name: 'shop-list',
+          component: () => import('../views/ProductList.vue'),
+        },
+        {
+          path: '/shop-detail/:id',
+          name: 'shop-detail',
+          component: () => import('../views/ProductDetail.vue'),
+        },
+      ],
     },
+
     // {
     //   path: '/about',
     //   name: 'about',

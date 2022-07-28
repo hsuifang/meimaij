@@ -2,18 +2,18 @@
 
 <template>
   <nav
-    class="bg-white navbar navbar-expand-md navbar-light border-bottom shadow-lg is-narrow sticky-top py-3"
+    class="bg-white navbar navbar-expand-md navbar-light border-bottom shadow-sm is-narrow sticky-top py-3"
   >
     <div class="container">
       <div class="d-flex">
-        <a class="navbar-brand" href="#">MEIMAIJ</a>
+        <router-link to="/" class="navbar-brand">MEIMAIJ</router-link>
         <div class="d-none d-md-block ms-3">
           <ul class="navbar-nav mt-2 mt-md-0">
             <li class="nav-item mx-1">
               <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item mx-1">
-              <a class="nav-link" href="#">Products</a>
+              <router-link :to="{ name: 'shop-list' }" class="nav-link">Products</router-link>
             </li>
             <li class="nav-item mx-1">
               <a class="nav-link" href="#">Contact</a>

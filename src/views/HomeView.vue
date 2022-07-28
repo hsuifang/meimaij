@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  <TheHeader />
   <!-- swiper -->
   <TheBanner />
   <!-- ad -->
@@ -204,9 +203,5 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section>
-    <TheFooter />
   </section>
 </template>
