@@ -137,6 +137,7 @@ $utilities: map-merge(
           $theme-colors,
           (
             'white': $white,
+            'transparent': transparent,
           )
         ),
     ),

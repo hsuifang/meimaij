@@ -112,7 +112,7 @@
             <div class="collection-image">
               <img
                 src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628178875634.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=HnnSrmmC8A2InAdKJzuWE4ogBBJ08UOkuXa94Wb9i%2FbZPLPvJ19ZIYHh5cT0b66RpA8uFXa2l6IWbSXGNcCI%2FaUCSKHHYqB0hZtlagEJ5SuMEds67tiv2Ib4vQHc%2BYHf%2FhBoip6JwTXfCn%2BhGSsg3dYKiRsyfMuQJOsynNBnxKgobrqpslMkku9IhTWk4iYmZPqz%2Bb8duW6pH2ST8QE0p6Y0houYgOhDq4DyFKqKfIFcXhJRGv2w9K6K%2Bpy%2F6OLk3Qb8YPMpycCOzeJoSuNhjCVB17v2zbXVk4B9dTnOw8nklYOtT%2BcmavdhvqaGSROaAN%2F5OwrSCfpK%2FXoLfr15Sw%3D%3D"
-                alt=""
+                alt="collection-image"
               />
             </div>
             <h4 class="py-3 text-gray-600 ls-2">他們笑 | 我們笑</h4>
@@ -121,7 +121,7 @@
             <div class="py-md-5 collection-image">
               <img
                 src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628178875634.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=HnnSrmmC8A2InAdKJzuWE4ogBBJ08UOkuXa94Wb9i%2FbZPLPvJ19ZIYHh5cT0b66RpA8uFXa2l6IWbSXGNcCI%2FaUCSKHHYqB0hZtlagEJ5SuMEds67tiv2Ib4vQHc%2BYHf%2FhBoip6JwTXfCn%2BhGSsg3dYKiRsyfMuQJOsynNBnxKgobrqpslMkku9IhTWk4iYmZPqz%2Bb8duW6pH2ST8QE0p6Y0houYgOhDq4DyFKqKfIFcXhJRGv2w9K6K%2Bpy%2F6OLk3Qb8YPMpycCOzeJoSuNhjCVB17v2zbXVk4B9dTnOw8nklYOtT%2BcmavdhvqaGSROaAN%2F5OwrSCfpK%2FXoLfr15Sw%3D%3D"
-                alt=""
+                alt="collection-image"
               />
             </div>
           </li>
@@ -131,7 +131,7 @@
               <div class="collection-image">
                 <img
                   src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628178999582.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=q90hXyluSlw%2FkhhHW0I4mbej39wDF2wH9dOL6bt5YJ8Evm64cCpRkiWyJkYbJHMucCXJGkYcm4OC28dVAi1Ga6iJD5xAYbN77I8sO0uxqIk82kWIPiPdiygKUj%2BoPsfwBL%2BAy3fdKmzYhN7g0qWnxnBGiSuX0vOiBEcfaEdOKINNZZJ5rGQI6V78G58EupKKTQ4VXAqnNxIpASsoYE9TmBJzd93oFR%2FQJJyaY8Y5GCeBurakP2kT3m%2FDiJB%2BPl%2FKDOF4W3sVXgqqm2wg0N%2B19xDUO1AfSlnXnwY%2BmiJnlbMjTZ2ddaCxcXhZmDgY2DiGzgHb%2BjGzG62ttT1j9p7jPw%3D%3D"
-                  alt=""
+                  alt="collection-image"
                 />
               </div>
             </div>
@@ -148,7 +148,7 @@
       <h2 class="border-start border-primary border-4 mb-3 mb-lg-4 ps-3">熱門商品</h2>
       <swiper
         :autoplay="{
-          delay: 20000,
+          delay: 5000,
           disableOnInteraction: false,
         }"
         :loop="true"
