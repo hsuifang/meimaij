@@ -19,10 +19,15 @@
 }
 
 .collection {
-  padding: 0 2rem;
+  @include media-breakpoint-up(md) {
+    padding: 0 2rem;
+  }
   overflow: hidden;
   &-discript {
-    padding: 1rem 2rem;
+    padding: 1rem 0;
+    @include media-breakpoint-up(md) {
+      padding: 1rem 2rem;
+    }
     color: $dark;
     display: flex;
     flex-direction: column;
@@ -104,6 +109,15 @@
         height: 100%;
         object-fit: cover;
         object-position: center center;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($secondary, 0.1);
       }
     }
     @include media-breakpoint-down(md) {

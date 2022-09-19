@@ -1,5 +1,11 @@
 <script setup>
+import { useProductStore } from '../stores/products'
 const cardStyle = ref('list')
+
+const $store = useProductStore()
+if (!$store.products.length) {
+  $store.fetchValidProducts()
+}
 </script>
 
 <template>
@@ -32,22 +38,24 @@ const cardStyle = ref('list')
           </li>
           <li>
             <h5 class="mb-2">標籤</h5>
-            <ul class="d-flex">
-              <li class="me-1 px-2 border bg-white"><a href="#" class="">鮮食</a></li>
-              <li class="me-1 px-2 border bg-white"><a href="#">熱門</a></li>
-              <li class="me-1 px-2 border bg-white"><a href="#">特價</a></li>
-              <li class="me-1 px-2 border bg-white"><a href="#">成犬</a></li>
+            <ul>
+              <li class="me-1 mb-1 px-2 border bg-white d-inline-block">
+                <a href="#" class="">鮮食</a>
+              </li>
+              <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">熱門</a></li>
+              <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">特價</a></li>
+              <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">成犬</a></li>
             </ul>
           </li>
         </ul>
       </div>
 
       <div class="col-12 col-lg-9">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3 px-2">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Library</li>
+              <li class="breadcrumb-item"><a href="#" @click="$router.push('/')">首頁</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{ $route.meta.title }}</li>
             </ol>
           </nav>
           <div class="d-flex align-items-center">
@@ -68,11 +76,15 @@ const cardStyle = ref('list')
         <ul class="row">
           <li
             :class="cardStyle === 'list' ? 'py-3  border-bottom col-12' : 'col-4'"
-            v-for="i in 3"
-            :key="i"
-            @click="$router.push({ name: 'shop-detail', params: { id: 'test' } })"
+            v-for="product in $store.products"
+            :key="product.id"
+            @click="$router.push({ name: 'shop-detail', params: { id: product.id } })"
           >
-            <ProductCard statusPos="vr" :direction="cardStyle === 'list' ? 'horizontal' : 'grid'" />
+            <ProductCard
+              statusPos="vr"
+              :product="product"
+              :direction="cardStyle === 'list' ? 'horizontal' : 'grid'"
+            />
           </li>
         </ul>
       </div>

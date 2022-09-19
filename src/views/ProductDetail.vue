@@ -1,5 +1,11 @@
 <script setup>
-const status = ref('discript')
+import { useProductStore } from '../stores/products'
+const $store = useProductStore()
+const tabStatus = ref('discript')
+
+if (!$store.products.length) {
+  $store.fetchValidProducts()
+}
 </script>
 
 <template>
@@ -7,8 +13,8 @@ const status = ref('discript')
     <div class="mb-5">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Library</li>
+          <li class="breadcrumb-item"><a href="#" @click.prevent="$router.push('/')">首頁</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ $route.meta.title }}</li>
         </ol>
       </nav>
     </div>
@@ -84,22 +90,22 @@ const status = ref('discript')
         <nav>
           <ul class="d-flex mb-3 mb-lg-5 border-bottom">
             <li
-              @click="status = 'discript'"
+              @click="tabStatus = 'discript'"
               class="h4 me-6 pb-3 fw-bold border-bottom border-4"
-              :class="status === 'discript' ? 'border-primary' : 'border-transparent'"
+              :class="tabStatus === 'discript' ? 'border-primary' : 'border-transparent'"
             >
               <a href="#" class="text-info" @click.prevent>產品說明</a>
             </li>
             <li
               class="h4 pb-3 fw-bold border-bottom border-4"
-              @click="status = 'comment'"
-              :class="status === 'comment' ? 'border-primary' : 'border-transparent'"
+              @click="tabStatus = 'comment'"
+              :class="tabStatus === 'comment' ? 'border-primary' : 'border-transparent'"
             >
               <a href="#" class="text-info" @click.prevent>商品評價</a>
             </li>
           </ul>
         </nav>
-        <div v-show="status === 'discript'">
+        <div v-show="tabStatus === 'discript'">
           <p class="py-3 fw-bold">說明 ---</p>
           <p>毛小孩的健康 / 從天然食物開始 小包裝9盒原價6300，特價5500。</p>
           <p class="py-3 fw-bold">內容 ---</p>
@@ -112,7 +118,7 @@ const status = ref('discript')
             微波加熱 保存方式/ 冷藏
           </p>
         </div>
-        <ul v-show="status === 'comment'">
+        <ul v-show="tabStatus === 'comment'">
           <li class="py-4 d-flex border-bottom">
             <img
               src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
@@ -190,10 +196,10 @@ const status = ref('discript')
           },
         }"
       >
-        <swiper-slide v-for="i in 9" :key="i"><ProductCard /></swiper-slide>
+        <swiper-slide v-for="product in $store.randomProductsByNum(9)" :key="product"
+          ><ProductCard :product="product"
+        /></swiper-slide>
       </swiper>
     </div>
   </section>
 </template>
-
-<style lang="scss"></style>
