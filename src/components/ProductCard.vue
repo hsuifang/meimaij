@@ -34,13 +34,14 @@ const addToFavorite = (id) => {
   >
     <div class="product-card-header">
       <p
-        class="product-card-status product-card-status--vr bg-primary text-white"
-        v-show="statusPos === 'vr'"
+        v-if="product.statusType"
+        :class="
+          product.statusPos === 'vr'
+            ? 'product-card-status product-card-status--vr bg-primary text-white'
+            : 'product-card-status product-card-status--vl bg-warning'
+        "
       >
-        {{ product.label || '無' }}
-      </p>
-      <p class="product-card-status product-card-status--vl bg-warning" v-show="statusPos === 'vl'">
-        {{ product.label || '無' }}
+        {{ product.statusType }}
       </p>
       <div class="product-card-image">
         <img :src="product.imageUrl" alt="product-card-img" />
@@ -86,10 +87,11 @@ const addToFavorite = (id) => {
           type="button"
           @click="addToCart(product.id)"
         >
-          加入購物車</button
+          <SvgIcon name="cart" width="24" height="24" />
+          <span class="d-none d-lg-inlie">加入購物車</span></button
         ><button class="btn btn-outline-info" type="button" @click="addToFavorite(product.id)">
           <SvgIcon name="favorite" width="24" height="24" />
-          加入最愛
+          <span class="d-none d-lg-inlie">加入最愛</span>
         </button>
       </div>
     </div>

@@ -1,11 +1,39 @@
 <script setup>
+import { apiGetSpecficProduct } from '@/api'
 import { useProductStore } from '../stores/products'
 const $store = useProductStore()
 const tabStatus = ref('discript')
-
+// store
 if (!$store.products.length) {
   $store.fetchValidProducts()
 }
+// route
+const route = useRoute()
+
+// product
+const productDetail = ref({})
+
+const showProductDetail = async (id) => {
+  try {
+    // this.$vLoading(true);
+    const res = await apiGetSpecficProduct(id)
+    const { success, product } = res.data
+    if (success) {
+      productDetail.value = {
+        ...product,
+        imagesUrl: [product.imageUrl, ...product.imagesUrl],
+        mainImage: product.imageUrl,
+      }
+    } else {
+      // this.$vHttpsNotice(res, '查看產品');
+    }
+  } catch (error) {
+    console.log(error)
+    // this.$vErrorNotice()
+  }
+}
+
+showProductDetail(route.params.id)
 </script>
 
 <template>
@@ -22,31 +50,22 @@ if (!$store.products.length) {
       <div class="product-detail-main mb-3 mb-lg-5">
         <div class="product-detail-cover">
           <div class="product-detail-image mb-2">
-            <img
-              alt="mainImage"
-              src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1625978530865.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=EFPGqJvSEcM1Ji28bYAUpUHWw1o7WhhJ4WsBroB83r7oWwbsruXqg1oPMJbFjpcQRWFKIwQEnPxUx%2FKKLjcrX9y8Nvmgsg3Hu%2BRQfy24oxI78UwWbnj6O6%2BMsgWhp%2FA5HowvyDRT6j4YzQgutaXOyuvcdX4ha3UpqjlP7wEKCb3AtymR8CFKUOsFUWxeJZ3FXZd8tFR7zNiqfcz81PZyto1bVpUm9z0YkUBQYhO57iOOgtljeCSMnBZ5OOaIS%2Fk%2BhsxUxjdYS8MVPpWUHjkJBPR0QaHw6woxef7inL19PFuQlithbV6voHVUw4LXz%2B%2B3yokU4IECsSOqhkae7w%2FP6g%3D%3D"
-            />
+            <img alt="mainImage" :src="productDetail.mainImage" />
           </div>
           <ul class="product-detail-thumbnails">
-            <li class="product-detail-thumbnail">
-              <img
-                src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1625978530865.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=EFPGqJvSEcM1Ji28bYAUpUHWw1o7WhhJ4WsBroB83r7oWwbsruXqg1oPMJbFjpcQRWFKIwQEnPxUx%2FKKLjcrX9y8Nvmgsg3Hu%2BRQfy24oxI78UwWbnj6O6%2BMsgWhp%2FA5HowvyDRT6j4YzQgutaXOyuvcdX4ha3UpqjlP7wEKCb3AtymR8CFKUOsFUWxeJZ3FXZd8tFR7zNiqfcz81PZyto1bVpUm9z0YkUBQYhO57iOOgtljeCSMnBZ5OOaIS%2Fk%2BhsxUxjdYS8MVPpWUHjkJBPR0QaHw6woxef7inL19PFuQlithbV6voHVUw4LXz%2B%2B3yokU4IECsSOqhkae7w%2FP6g%3D%3D"
-                class="obj-fit-contain"
-                alt="thumbnailImg"
-              />
-            </li>
-            <li class="product-detail-thumbnail">
-              <img
-                src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1625978530865.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=EFPGqJvSEcM1Ji28bYAUpUHWw1o7WhhJ4WsBroB83r7oWwbsruXqg1oPMJbFjpcQRWFKIwQEnPxUx%2FKKLjcrX9y8Nvmgsg3Hu%2BRQfy24oxI78UwWbnj6O6%2BMsgWhp%2FA5HowvyDRT6j4YzQgutaXOyuvcdX4ha3UpqjlP7wEKCb3AtymR8CFKUOsFUWxeJZ3FXZd8tFR7zNiqfcz81PZyto1bVpUm9z0YkUBQYhO57iOOgtljeCSMnBZ5OOaIS%2Fk%2BhsxUxjdYS8MVPpWUHjkJBPR0QaHw6woxef7inL19PFuQlithbV6voHVUw4LXz%2B%2B3yokU4IECsSOqhkae7w%2FP6g%3D%3D"
-                class="obj-fit-contain"
-                alt="thumbnailImg"
-              />
+            <li
+              class="product-detail-thumbnail cursor-pointer"
+              v-for="img in productDetail.imagesUrl"
+              :key="img"
+              @click="productDetail.mainImage = img"
+            >
+              <img :src="img" class="obj-fit-contain" alt="thumbnailImg" />
             </li>
           </ul>
         </div>
         <div class="product-detail-content">
           <div class="py-5 ps-lg-5 border-bottom">
-            <h2 class="mb-1">牛雞生肉餐</h2>
+            <h2 class="mb-1">{{ productDetail.title }}</h2>
             <div class="mb-3">
               <SvgIcon name="star" width="20" height="20" normal="orange" />
               <SvgIcon name="star" width="20" height="20" normal="orange" />
@@ -55,12 +74,12 @@ if (!$store.products.length) {
               <SvgIcon name="star" width="20" height="20" normal="orange" />
             </div>
             <h3 class="text-primary mb-3 mb-lg-4">
-              NT$ 5,500 <del class="fs-5 text-info">NT$ 6,300</del>
+              NT$ {{ productDetail.price }}
+              <del class="fs-5 text-info">NT$ {{ productDetail.origin_price }}</del>
             </h3>
-            <p class="text-info mb-2">
-              毛小孩的健康 / 從天然食物開始 小包裝9盒原價6300，特價5500。
+            <p class="text-info mb-4">
+              {{ productDetail.content }}
             </p>
-            <p class="text-info mb-4">餵食份量/ 成犬: 體重的2%~3% 未滿一歲: 體重的5%~7%</p>
             <div class="d-lg-flex">
               <div class="d-flex align-items-center mb-3 mb-lg-0">
                 <label for="input-quantity" class="me-2">數量</label
@@ -80,9 +99,11 @@ if (!$store.products.length) {
             </div>
           </div>
           <ul class="ps-lg-5 py-4">
-            <li class="py-1 text-gray-500 fs-7">編號:2U897423</li>
-            <li class="py-1 text-gray-500 fs-7">分類: XXX</li>
-            <li class="py-1 text-gray-500 fs-7">Tag: 1111, asdf</li>
+            <li class="py-1 text-gray-500 fs-7">編號:{{ productDetail.id }}</li>
+            <li class="py-1 text-gray-500 fs-7">分類: {{ productDetail.category }}</li>
+            <li class="py-1 text-gray-500 fs-7" v-if="productDetail.statusType">
+              標籤: {{ productDetail.statusType }}
+            </li>
           </ul>
         </div>
       </div>
@@ -107,15 +128,12 @@ if (!$store.products.length) {
         </nav>
         <div v-show="tabStatus === 'discript'">
           <p class="py-3 fw-bold">說明 ---</p>
-          <p>毛小孩的健康 / 從天然食物開始 小包裝9盒原價6300，特價5500。</p>
+          <p>{{ productDetail.description }}</p>
           <p class="py-3 fw-bold">內容 ---</p>
-          <p>餵食份量/ 成犬: 體重的2%~3% 未滿一歲: 體重的5%~7%</p>
+          <p>{{ productDetail.content }}</p>
           <p class="py-3 fw-bold">規格 ---</p>
           <p>
-            **牛生肉餐** 適用階段/成犬 主成分/ 雞肉 成分/
-            全雞（帶骨）、雞胸肉、雞腿肉、水、雞心、鴨肝、雞蛋黃、雞肝、魚油、牛磺酸、鹽、海帶粉、錳、維生素E、鋅、維生素B1
-            餵食份量/ 成犬: 體重的2%~3% 未滿一歲: 體重的5%~7% 餵食方式/ 1. 提早6-8小時至冷藏解凍 2.
-            微波加熱 保存方式/ 冷藏
+            {{ productDetail.spec }}
           </p>
         </div>
         <ul v-show="tabStatus === 'comment'">

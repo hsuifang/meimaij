@@ -45,6 +45,22 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue'),
+    },
+    {
+      path: '/admin',
+      component: () => import('../views/admin/Admin.vue'),
+      children: [
+        {
+          path: '',
+          name: 'admin-product',
+          component: () => import('../views/admin/TheProducts.vue'),
+        },
+      ],
+    },
 
     // {
     //   path: '/about',
@@ -55,6 +71,13 @@ const router = createRouter({
     //   component: () => import('../views/AboutView.vue')
     // }
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0, behavior: 'smooth' }
+    }
+  },
 })
 
 export default router

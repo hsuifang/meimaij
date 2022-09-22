@@ -7,9 +7,18 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppModal: typeof import('./../components/AppModal.vue')['default']
+    AppPagination: typeof import('./../components/AppPagination.vue')['default']
+    AppTable: typeof import('./../components/AppTable.vue')['default']
     copy: typeof import('./../components/ProductCard copy.vue')['default']
+    Pagination: typeof import('./../components/Pagination.vue')['default']
     ProductCard: typeof import('./../components/ProductCard.vue')['default']
     ProductCardList: typeof import('./../components/ProductCardList.vue')['default']
+    ProductItemForm: typeof import('./../components/ProductItemForm.vue')['default']
+    ProductItemImagesUpload: typeof import('./../components/ProductItemImagesUpload.vue')['default']
+    ProductItemImageUpload: typeof import('./../components/ProductItemImageUpload.vue')['default']
+    ProductModal: typeof import('./../components/ProductModal.vue')['default']
+    QuestionModal: typeof import('./../components/QuestionModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./../components/SvgIcon.vue')['default']

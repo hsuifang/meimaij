@@ -6,36 +6,65 @@ const $store = useProductStore()
 if (!$store.products.length) {
   $store.fetchValidProducts()
 }
+
+// Filter:
+const inputName = ref('')
+const searchName = ref('')
+const categorySelected = ref('全部')
+const productList = computed(() => {
+  return $store.filterProductByRule({
+    searchName: searchName.value,
+    category: categorySelected.value,
+  })
+})
+const setSearchName = (val) => {
+  searchName.value = val
+}
+// 名字雷同
+// 標籤
+
+// 產品類型
 </script>
 
 <template>
   <div class="container py-5">
     <div class="row g-5">
       <!-- filter -->
-      <div class="col-lg-3">
+      <div class="d-none d-lg-block col-lg-3">
         <div class="input-group mb-4">
-          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" />
-          <button type="button" class="btn">搜尋</button>
+          <input
+            v-model="inputName"
+            aria-label="搜尋名稱"
+            type="text"
+            class="form-control"
+            placeholder="查詢產品名稱"
+            @keyup.enter="setSearchName(inputName)"
+          />
+          <button type="button" class="btn border bg-light" @click="setSearchName(inputName)">
+            搜尋
+          </button>
         </div>
-
         <ul>
           <li class="mb-4">
             <h5 class="mb-2">產品類型</h5>
             <ul class="ms-2">
-              <li class="mb-2"><a href="#">全部 (1000)</a></li>
-              <li class="mb-2"><a href="#">乾糧(22)</a></li>
-              <li class="mb-2"><a href="#">零食(22)</a></li>
-              <li class="mb-2"><a href="#">鮮食(22)</a></li>
-              <li class="mb-2"><a href="#">生食餐(22)</a></li>
+              <li class="mb-2" v-for="category in $store.categoriesInfo" :key="category.id">
+                <a
+                  href="#"
+                  class="border-2 pb-1"
+                  :class="
+                    categorySelected === category.name
+                      ? 'border-bottom border-primary'
+                      : 'border-transparent'
+                  "
+                  @click.prevent="categorySelected = category.name"
+                  >{{ category.name }} ( {{ category.count }} )</a
+                >
+              </li>
             </ul>
           </li>
-          <li class="mb-4">
-            <h5 class="mb-2">價位</h5>
-            <div>
-              <input type="range" class="form-range" min="0" max="1000" id="customRange2" />
-              <p>price: $0 - $1,000</p>
-            </div>
-          </li>
+          <!-- TODO -->
+          <!--
           <li>
             <h5 class="mb-2">標籤</h5>
             <ul>
@@ -47,6 +76,7 @@ if (!$store.products.length) {
               <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">成犬</a></li>
             </ul>
           </li>
+          -->
         </ul>
       </div>
 
@@ -67,16 +97,17 @@ if (!$store.products.length) {
                 ><SvgIcon name="list" width="24" height="24"
               /></a>
             </div>
-            <select class="form-select">
-              <option value="0">Price: Low To High</option>
-              <option value="1">Price:Low To High</option>
-            </select>
+            <!-- TODO -->
+            <!-- <select class="form-select">
+              <option value="0">價格: 低到高</option>
+              <option value="1">價格: 高到低</option>
+            </select> -->
           </div>
         </div>
         <ul class="row">
           <li
-            :class="cardStyle === 'list' ? 'py-3  border-bottom col-12' : 'col-4'"
-            v-for="product in $store.products"
+            :class="cardStyle === 'list' ? 'py-3  border-bottom col-12' : 'col-6 col-lg-4'"
+            v-for="product in productList"
             :key="product.id"
             @click="$router.push({ name: 'shop-detail', params: { id: product.id } })"
           >
@@ -87,6 +118,9 @@ if (!$store.products.length) {
             />
           </li>
         </ul>
+        <p class="text-center" v-if="productList.length === 0">
+          查無結果 / <a href="#" @click.prevent="$store.setSearchName('')"> 查看全部商品 </a>
+        </p>
       </div>
     </div>
   </div>
