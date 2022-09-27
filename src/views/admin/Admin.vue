@@ -43,7 +43,6 @@ export default {
           if (success) {
             this.isAuthenticated = true
           } else {
-            console.log('hay')
             // this.$router.push('/login')
           }
         } catch (error) {
@@ -54,7 +53,6 @@ export default {
       } else {
         // this.$router.push('/login')
         // this.$vLoading(false)
-        console.log('hay')
       }
     },
     async handleLogout() {
@@ -65,7 +63,6 @@ export default {
           JWT.removeToken()
           this.isAuthenticated = false
           // this.$router.push('/login')
-          console.log('hay')
         }
       } catch (error) {
         // this.$vErrorNotice()

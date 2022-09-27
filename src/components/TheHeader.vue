@@ -25,7 +25,7 @@ const showOffcanvas = ref(false)
       </div>
 
       <ul class="d-none d-md-flex">
-        <li class="mx-1">
+        <li class="mx-1" @click.prevent="$router.push({ name: 'favorite' })">
           <a href="#">
             <SvgIcon name="favorite" width="24" height="24" />
           </a>
@@ -36,7 +36,9 @@ const showOffcanvas = ref(false)
           </a>
         </li>
         <li class="mx-1">
-          <SvgIcon name="portfolio" width="24" height="24" />
+          <a href="#" @click.prevent="$router.push({ name: 'orders' })">
+            <SvgIcon name="portfolio" width="24" height="24" />
+          </a>
         </li>
       </ul>
 

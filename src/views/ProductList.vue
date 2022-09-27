@@ -114,7 +114,7 @@ const setSearchName = (val) => {
             <ProductCard
               statusPos="vr"
               :product="product"
-              :direction="cardStyle === 'list' ? 'horizontal' : 'grid'"
+              :direction="cardStyle === 'list' ? 'horizontal' : 'vertical'"
             />
           </li>
         </ul>

@@ -27,13 +27,6 @@ watch(
   }
 )
 
-watch(
-  () => offcanvas.info,
-  (val) => {
-    console.error(val)
-  }
-)
-
 onMounted(() => {
   offcanvas.info = bsAppOffcanvas(canvasRef.value)
 })

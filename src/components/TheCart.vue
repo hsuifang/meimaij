@@ -83,7 +83,13 @@ $store.fetchCartList()
           </p>
           <h4 class="py-3">總共：{{ $store.price.final }}</h4>
           <template v-if="carts.length !== 0">
-            <button type="button" class="btn btn-outline-primary btn-lg w-100 mb-3">購物車</button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-lg w-100 mb-3"
+              @click="$router.push({ name: 'cart' })"
+            >
+              購物車
+            </button>
             <a href="#" class="btn btn-primary btn-lg w-100 text-white">直接購買</a>
           </template>
         </div>

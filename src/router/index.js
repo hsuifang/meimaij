@@ -29,6 +29,11 @@ const router = createRouter({
           meta: { title: '產品明細' },
         },
         {
+          path: '/cart',
+          name: 'cart',
+          component: () => import('../views/UserCart.vue'),
+        },
+        {
           path: '/checkout',
           name: 'checkout',
           component: () => import('../views/UserCheckout.vue'),
@@ -40,8 +45,13 @@ const router = createRouter({
         },
         {
           path: '/member/order',
-          name: 'orderDetail',
+          name: 'orders',
           component: () => import('../views/UserOrderList.vue'),
+        },
+        {
+          path: '/member/favorite',
+          name: 'favorite',
+          component: () => import('../views/UserFavorite.vue'),
         },
       ],
     },

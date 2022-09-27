@@ -1,12 +1,13 @@
 <script setup>
 import { useCartStore } from '../stores/cart'
+import { useFavorite } from '../composable/useFavorite'
+
 const props = defineProps({
   product: {
     type: Object,
     require: true,
     default: () => ({}),
   },
-  // TODO status position
   statusPos: {
     type: String,
     default: 'vl',
@@ -17,17 +18,21 @@ const props = defineProps({
     validator: (val) => ['vertical', 'horizontal'].indexOf(val) !== -1,
   },
 })
-// https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1625978530865.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=EFPGqJvSEcM1Ji28bYAUpUHWw1o7WhhJ4WsBroB83r7oWwbsruXqg1oPMJbFjpcQRWFKIwQEnPxUx%2FKKLjcrX9y8Nvmgsg3Hu%2BRQfy24oxI78UwWbnj6O6%2BMsgWhp%2FA5HowvyDRT6j4YzQgutaXOyuvcdX4ha3UpqjlP7wEKCb3AtymR8CFKUOsFUWxeJZ3FXZd8tFR7zNiqfcz81PZyto1bVpUm9z0YkUBQYhO57iOOgtljeCSMnBZ5OOaIS%2Fk%2BhsxUxjdYS8MVPpWUHjkJBPR0QaHw6woxef7inL19PFuQlithbV6voHVUw4LXz%2B%2B3yokU4IECsSOqhkae7w%2FP6g%3D%3D
-// TODO: AddToCart & AddFavorite
+
 // store
 const $store = useCartStore()
 const addToCart = (id) => {
-  console.log('AddToCart', id)
   $store.addToCart({ productId: id, qty: 1 })
 }
+
+// favorite
+const { toggleFavorite, initFavorite, isFavorite } = useFavorite()
 const addToFavorite = (id) => {
-  console.log('addToFavorite', id)
+  toggleFavorite(id)
 }
+onMounted(() => {
+  initFavorite(props.product.id)
+})
 </script>
 
 <template>
@@ -51,7 +56,7 @@ const addToFavorite = (id) => {
         <img :src="product.imageUrl" alt="product-card-img" />
       </div>
       <div class="product-card-action">
-        <li class="me-2" @click="addToFavorite(product.id)">
+        <li class="me-2" @click="addToFavorite(product)">
           <SvgIcon name="favorite" width="24" height="24" />
         </li>
         <li @click.stop="addToCart(product.id)"><SvgIcon name="cart" width="24" height="24" /></li>
@@ -84,9 +89,17 @@ const addToFavorite = (id) => {
           @click.stop="addToCart(product.id)"
         >
           <SvgIcon name="cart" width="24" height="24" />
-          <span class="d-none d-lg-inlie">加入購物車</span></button
-        ><button class="btn btn-outline-info" type="button" @click="addToFavorite(product.id)">
-          <SvgIcon name="favorite" width="24" height="24" />
+          <span class="d-none d-lg-inlie">加入購物車</span>
+        </button>
+        <button class="btn btn-outline-info" type="button" @click.stop="addToFavorite(product.id)">
+          <SvgIcon
+            v-show="isFavorite"
+            name="favorite-fill"
+            width="20"
+            height="20"
+            normal="#ea8484"
+          />
+          <SvgIcon v-show="!isFavorite" name="favorite" width="24" height="24" />
           <span class="d-none d-lg-inlie">加入最愛</span>
         </button>
       </div>

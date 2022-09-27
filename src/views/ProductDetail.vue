@@ -2,6 +2,8 @@
 import { apiGetSpecficProduct } from '@/api'
 import { useProductStore } from '../stores/products'
 import { useCartStore } from '../stores/cart'
+import { useFavorite } from '../composable/useFavorite'
+
 const $productStore = useProductStore()
 const $cartStore = useCartStore()
 
@@ -32,11 +34,19 @@ const showProductDetail = async (id) => {
       // this.$vHttpsNotice(res, '查看產品');
     }
   } catch (error) {
-    console.log(error)
     // this.$vErrorNotice()
   }
 }
+// favorite
+const { toggleFavorite, initFavorite, isFavorite } = useFavorite()
+const addToFavorite = (id) => {
+  toggleFavorite(id)
+}
+onMounted(() => {
+  initFavorite(productDetail.id)
+})
 
+//
 showProductDetail(route.params.id)
 </script>
 
@@ -103,8 +113,19 @@ showProductDetail(route.params.id)
                 "
               >
                 加入購物車</button
-              ><button type="button" class="btn btn-outline-info">
-                <SvgIcon name="favorite" width="24" height="24" />
+              ><button
+                type="button"
+                class="btn btn-outline-info"
+                @click.stop="addToFavorite(productDetail)"
+              >
+                <SvgIcon
+                  v-show="isFavorite"
+                  name="favorite-fill"
+                  width="24"
+                  height="24"
+                  normal="#ea8484"
+                />
+                <SvgIcon v-show="!isFavorite" name="favorite" width="24" height="24" />
               </button>
             </div>
           </div>

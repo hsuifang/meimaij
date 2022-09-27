@@ -31,7 +31,6 @@ let statuses = [
     value: '',
   },
 ]
-const images = ref([])
 let currentProductItem = ref({})
 
 const submitProductItem = async () => {
@@ -46,7 +45,6 @@ const submitProductItem = async () => {
       emit('submitProductItem')
     }
   } catch (error) {
-    console.log(error)
     // this.$vErrorNotice();
   } finally {
     // this.$vLoading(false);
