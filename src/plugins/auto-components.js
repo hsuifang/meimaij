@@ -8,8 +8,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppModal: typeof import('./../components/AppModal.vue')['default']
+    AppOffcanvas: typeof import('./../components/AppOffcanvas.vue')['default']
     AppPagination: typeof import('./../components/AppPagination.vue')['default']
     AppTable: typeof import('./../components/AppTable.vue')['default']
+    CartOffcanvas: typeof import('./../components/CartOffcanvas.vue')['default']
     copy: typeof import('./../components/ProductCard copy.vue')['default']
     Pagination: typeof import('./../components/Pagination.vue')['default']
     ProductCard: typeof import('./../components/ProductCard.vue')['default']
@@ -17,12 +19,14 @@ declare module '@vue/runtime-core' {
     ProductItemForm: typeof import('./../components/ProductItemForm.vue')['default']
     ProductItemImagesUpload: typeof import('./../components/ProductItemImagesUpload.vue')['default']
     ProductItemImageUpload: typeof import('./../components/ProductItemImageUpload.vue')['default']
+    ProductItemRate: typeof import('./../components/ProductItemRate.vue')['default']
     ProductModal: typeof import('./../components/ProductModal.vue')['default']
     QuestionModal: typeof import('./../components/QuestionModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./../components/SvgIcon.vue')['default']
     TheBanner: typeof import('./../components/TheBanner.vue')['default']
+    TheCart: typeof import('./../components/TheCart.vue')['default']
     TheFooter: typeof import('./../components/TheFooter.vue')['default']
     TheHeader: typeof import('./../components/TheHeader.vue')['default']
   }

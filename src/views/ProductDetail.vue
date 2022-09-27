@@ -1,16 +1,20 @@
 <script setup>
 import { apiGetSpecficProduct } from '@/api'
 import { useProductStore } from '../stores/products'
-const $store = useProductStore()
+import { useCartStore } from '../stores/cart'
+const $productStore = useProductStore()
+const $cartStore = useCartStore()
+
 const tabStatus = ref('discript')
 // store
-if (!$store.products.length) {
-  $store.fetchValidProducts()
+if (!$productStore.products.length) {
+  $productStore.fetchValidProducts()
 }
 // route
 const route = useRoute()
 
 // product
+const itemNumber = ref(1)
 const productDetail = ref({})
 
 const showProductDetail = async (id) => {
@@ -67,11 +71,7 @@ showProductDetail(route.params.id)
           <div class="py-5 ps-lg-5 border-bottom">
             <h2 class="mb-1">{{ productDetail.title }}</h2>
             <div class="mb-3">
-              <SvgIcon name="star" width="20" height="20" normal="orange" />
-              <SvgIcon name="star" width="20" height="20" normal="orange" />
-              <SvgIcon name="star" width="20" height="20" normal="orange" />
-              <SvgIcon name="star" width="20" height="20" normal="orange" />
-              <SvgIcon name="star" width="20" height="20" normal="orange" />
+              <ProductItemRate :rate="+productDetail.rate || 0" />
             </div>
             <h3 class="text-primary mb-3 mb-lg-4">
               NT$ {{ productDetail.price }}
@@ -89,10 +89,20 @@ showProductDetail(route.params.id)
                   min="1"
                   id="input-quantity"
                   class="form-control w-auto me-2"
-                  value="1"
+                  v-model="itemNumber"
                 />
               </div>
-              <button type="button" class="btn btn-primary text-white me-2">加入購物車</button
+              <button
+                type="button"
+                class="btn btn-primary text-white me-2"
+                @click="
+                  $cartStore.addToCart({
+                    productId: productDetail.id,
+                    qty: itemNumber,
+                  })
+                "
+              >
+                加入購物車</button
               ><button type="button" class="btn btn-outline-info">
                 <SvgIcon name="favorite" width="24" height="24" />
               </button>
@@ -214,7 +224,7 @@ showProductDetail(route.params.id)
           },
         }"
       >
-        <swiper-slide v-for="product in $store.randomProductsByNum(9)" :key="product"
+        <swiper-slide v-for="product in $productStore.randomProductsByNum(9)" :key="product"
           ><ProductCard :product="product"
         /></swiper-slide>
       </swiper>

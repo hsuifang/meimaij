@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+const showOffcanvas = ref(false)
+</script>
 
 <template>
   <nav
@@ -10,13 +12,13 @@
         <div class="d-none d-md-block ms-3">
           <ul class="navbar-nav mt-2 mt-md-0">
             <li class="nav-item mx-1">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="#">關於我們</a>
             </li>
             <li class="nav-item mx-1">
-              <router-link :to="{ name: 'shop-list' }" class="nav-link">Products</router-link>
+              <router-link :to="{ name: 'shop-list' }" class="nav-link">產品</router-link>
             </li>
             <li class="nav-item mx-1">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="#">聯絡我們</a>
             </li>
           </ul>
         </div>
@@ -24,10 +26,14 @@
 
       <ul class="d-none d-md-flex">
         <li class="mx-1">
-          <SvgIcon name="favorite" width="24" height="24" />
+          <a href="#">
+            <SvgIcon name="favorite" width="24" height="24" />
+          </a>
         </li>
         <li class="mx-1">
-          <SvgIcon name="cart" width="24" height="24" />
+          <a href="#" @click.prevent="showOffcanvas = true">
+            <SvgIcon name="cart" width="24" height="24" />
+          </a>
         </li>
         <li class="mx-1">
           <SvgIcon name="portfolio" width="24" height="24" />
@@ -47,6 +53,9 @@
       </button>
     </div>
   </nav>
+  <AppOffcanvas v-model="showOffcanvas" title="購物車">
+    <TheCart />
+  </AppOffcanvas>
 </template>
 
 <style></style>

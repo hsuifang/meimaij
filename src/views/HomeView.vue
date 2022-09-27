@@ -104,7 +104,7 @@ $store.fetchValidProducts()
           class="col-6 col-md-3 mb-3"
           v-for="product in $store.randomProductsByNum(4)"
           :key="product"
-          v-animate="{ name: 'fadeInDown', delay: `${i > 4 ? '1.2s' : '0.8s'}` }"
+          v-animate="{ name: 'fadeInDown', delay: `${product.length > 4 ? '1.2s' : '0.8s'}` }"
         >
           <ProductCard :product="product" />
         </div>
