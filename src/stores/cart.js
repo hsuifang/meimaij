@@ -1,5 +1,13 @@
 import { defineStore } from 'pinia'
 import { apiGetCartList, apiAddCart, apiDeleteCart, apiDeleteAllCart, apiUpdateCart } from '@/api'
+import useNotifications from '../composable/useNotifications'
+import useLoading from '../composable/useLoading'
+import { reduce } from 'lodash'
+// loading
+const { toggleLoading } = useLoading()
+
+// notify
+const { addNotifications } = useNotifications()
 
 export const useCartStore = defineStore({
   id: 'cart',
@@ -12,6 +20,7 @@ export const useCartStore = defineStore({
   }),
   getters: {
     carts: (state) => state.items,
+    volume: (state) => reduce(state.items, (acc, item) => item.qty + acc, 0),
   },
   actions: {
     async fetchCartList() {
@@ -24,31 +33,38 @@ export const useCartStore = defineStore({
           this.price.final = data.final_total
         }
       } catch (error) {
-        // this.$vErrorNotice();
+        const message = error.response?.message || '系統發生異常'
+        addNotifications({ message, type: 'error' })
       }
     },
     async addToCart({ productId, qty }) {
       try {
         const res = await apiAddCart({ id: productId, qty })
-        if (res.data.success) {
+        const { success, message } = res.data
+        if (success) {
           this.fetchCartList()
+          addNotifications({ message, type: 'success' })
         }
       } catch (error) {
-        // this.$vErrorNotice();
+        const message = error.response?.message || '系統發生異常'
+        addNotifications({ message, type: 'error' })
       }
     },
     async updateCart({ cartId, productId, qty }) {
       try {
         const res = await apiUpdateCart({ cartId, productId, qty })
-        const { success } = res.data
+        const { success, message } = res.data
         if (success) {
           this.fetchCartList()
+          addNotifications({ message, type: 'success' })
         }
       } catch (error) {
-        //
+        const message = error.response?.message || '系統發生異常'
+        addNotifications({ message, type: 'error' })
       }
     },
     async deleteItemFromCart({ cartId }) {
+      toggleLoading(true)
       try {
         const res = await apiDeleteCart(cartId)
         const { success } = res.data
@@ -56,24 +72,28 @@ export const useCartStore = defineStore({
           this.fetchCartList()
         }
       } catch (error) {
-        // this.$vErrorNotice();
-        // this.$vLoading(false);
+        const message = error.response?.message || '系統發生異常'
+        addNotifications({ message, type: 'error' })
       }
+      toggleLoading(false)
     },
     async deleteAllCart() {
+      toggleLoading(true)
       try {
         const res = await apiDeleteAllCart()
         const { success } = res.data
         if (success) {
           this.items = []
           this.fetchCartList()
+          addNotifications({ message: '刪除所有購物車成功', type: 'success' })
         } else {
-          // this.$vHttpsNotice(res, '刪除所有購物車');
+          addNotifications({ message: '刪除所有購物車異常', type: 'danger' })
         }
       } catch (error) {
-        // this.$vErrorNotice();
-        // this.$vLoading(false);
+        const message = error.response?.message || '系統發生異常'
+        addNotifications({ message, type: 'error' })
       }
+      toggleLoading(false)
     },
   },
 })

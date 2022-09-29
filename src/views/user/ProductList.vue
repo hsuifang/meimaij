@@ -1,5 +1,7 @@
 <script setup>
-import { useProductStore } from '../stores/products'
+import { useProductStore } from '@/stores/products'
+
+// store
 const cardStyle = ref('list')
 
 const $store = useProductStore()
@@ -20,10 +22,6 @@ const productList = computed(() => {
 const setSearchName = (val) => {
   searchName.value = val
 }
-// 名字雷同
-// 標籤
-
-// 產品類型
 </script>
 
 <template>
@@ -63,20 +61,6 @@ const setSearchName = (val) => {
               </li>
             </ul>
           </li>
-          <!-- TODO -->
-          <!--
-          <li>
-            <h5 class="mb-2">標籤</h5>
-            <ul>
-              <li class="me-1 mb-1 px-2 border bg-white d-inline-block">
-                <a href="#" class="">鮮食</a>
-              </li>
-              <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">熱門</a></li>
-              <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">特價</a></li>
-              <li class="me-1 mb-1 px-2 border bg-white d-inline-block"><a href="#">成犬</a></li>
-            </ul>
-          </li>
-          -->
         </ul>
       </div>
 

@@ -27,9 +27,7 @@ const addToCart = (id) => {
 
 // favorite
 const { toggleFavorite, initFavorite, isFavorite } = useFavorite()
-const addToFavorite = (id) => {
-  toggleFavorite(id)
-}
+
 onMounted(() => {
   initFavorite(props.product.id)
 })
@@ -56,7 +54,7 @@ onMounted(() => {
         <img :src="product.imageUrl" alt="product-card-img" />
       </div>
       <div class="product-card-action">
-        <li class="me-2" @click="addToFavorite(product)">
+        <li class="me-2" @click.stop="toggleFavorite(product)">
           <SvgIcon name="favorite" width="24" height="24" />
         </li>
         <li @click.stop="addToCart(product.id)"><SvgIcon name="cart" width="24" height="24" /></li>
@@ -88,18 +86,24 @@ onMounted(() => {
           type="button"
           @click.stop="addToCart(product.id)"
         >
-          <SvgIcon name="cart" width="24" height="24" />
+          <SvgIcon name="cart" width="24" height="24" color="#feebeb" :need-hover="false" />
           <span class="d-none d-lg-inlie">加入購物車</span>
         </button>
-        <button class="btn btn-outline-info" type="button" @click.stop="addToFavorite(product.id)">
+        <button class="btn btn-outline-info" type="button" @click.stop="toggleFavorite(product)">
           <SvgIcon
             v-show="isFavorite"
             name="favorite-fill"
-            width="20"
-            height="20"
-            normal="#ea8484"
+            width="24"
+            height="24"
+            :need-hover="false"
           />
-          <SvgIcon v-show="!isFavorite" name="favorite" width="24" height="24" />
+          <SvgIcon
+            v-show="!isFavorite"
+            name="favorite"
+            width="24"
+            height="24"
+            :need-hover="false"
+          />
           <span class="d-none d-lg-inlie">加入最愛</span>
         </button>
       </div>

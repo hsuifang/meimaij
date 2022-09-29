@@ -1,3 +1,54 @@
+<script setup>
+import { apiCheckUser, apiLogout } from '@/api'
+import JWT from '@/api/cookies'
+import useLoading from '../../composable/useLoading'
+// loading
+const { toggleLoading } = useLoading()
+
+const isAuthenticated = ref(false)
+
+// router
+const $router = useRouter()
+
+const checkLogin = async () => {
+  toggleLoading(true)
+  const token = JWT.getToken()
+  if (token) {
+    try {
+      const res = await apiCheckUser(token)
+      const { success } = res.data
+      if (success) {
+        isAuthenticated.value = true
+      } else {
+        $router.push({ name: 'login' })
+      }
+    } catch (error) {
+      // this.$vErrorNotice()
+    }
+  } else {
+    $router.push({ name: 'login' })
+  }
+  toggleLoading(false)
+}
+
+const handleLogout = async () => {
+  toggleLoading(true)
+  try {
+    const res = await apiLogout()
+    if (res.data.success) {
+      JWT.removeToken()
+      isAuthenticated.value = false
+      $router.push({ name: 'login' })
+    }
+  } catch (error) {
+    // this.$vErrorNotice()
+  }
+  toggleLoading(false)
+}
+
+checkLogin()
+</script>
+
 <template>
   <div class="back bg-logo min-vh-100">
     <div class="container py-5">
@@ -10,9 +61,6 @@
           <router-link class="nav-link" to="/admin/orders">訂單</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin/coupons">優惠券</router-link>
-        </li>
-        <li class="nav-item">
           <a href="#" class="nav-link" @click.prevent="handleLogout">登出</a>
         </li>
       </ul>
@@ -20,62 +68,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { apiCheckUser, apiLogout } from '@/api'
-import JWT from '@/api/cookies'
-
-export default {
-  name: 'Dashboard',
-  data() {
-    return {
-      isAuthenticated: false,
-    }
-  },
-  methods: {
-    async checkLogin() {
-      // this.$vLoading(true)
-      const token = JWT.getToken()
-      if (token) {
-        try {
-          const res = await apiCheckUser(token)
-          const { success } = res.data
-          if (success) {
-            this.isAuthenticated = true
-          } else {
-            // this.$router.push('/login')
-          }
-        } catch (error) {
-          // this.$vErrorNotice()
-        } finally {
-          // this.$vLoading(false)
-        }
-      } else {
-        // this.$router.push('/login')
-        // this.$vLoading(false)
-      }
-    },
-    async handleLogout() {
-      // this.$vLoading(true);
-      try {
-        const res = await apiLogout()
-        if (res.data.success) {
-          JWT.removeToken()
-          this.isAuthenticated = false
-          // this.$router.push('/login')
-        }
-      } catch (error) {
-        // this.$vErrorNotice()
-      } finally {
-        // this.$vLoading(false)
-      }
-    },
-  },
-  created() {
-    this.checkLogin()
-  },
-}
-</script>
 
 <style lang="scss">
 .back {

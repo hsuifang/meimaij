@@ -6,6 +6,15 @@ import {
   apiUpdateProduct,
 } from '@/api'
 
+import useLoading from '../../composable/useLoading'
+import useNotifications from '../../composable/useNotifications'
+
+// loading
+const { toggleLoading } = useLoading()
+
+// notify
+const { addNotifications } = useNotifications()
+
 // product list
 const columns = [
   { name: 'title', label: '產品名稱' },
@@ -23,6 +32,7 @@ const pageInfo = ref({
 })
 
 const fetchProductData = async (page = 1) => {
+  toggleLoading(true)
   try {
     const res = await apiGetAdminProducts(page)
     const { pagination, success } = res.data
@@ -36,14 +46,13 @@ const fetchProductData = async (page = 1) => {
         currentPage: pagination.current_page,
         totalPages: pagination.total_pages,
       }
-      console.log(products)
     } else {
       //
     }
   } catch (error) {
-    console.log(error)
-    // $vLoading(false)
+    //
   }
+  toggleLoading(false)
 }
 
 // handle action of product
@@ -70,25 +79,24 @@ const toggleProductItemStatus = async (item) => {
     currentProductItem.data = item
     currentProductItem.data.is_enabled = !currentProductItem.data.is_enabled
     await submitProductItem({ isNew: false, content: currentProductItem.data })
-  } catch (error) {
-    $vErrorNotice()
-  }
+  } catch (error) {}
 }
-const deleteProductItem = async (id) => {
-  // $vLoading(true)
+const deleteProductItem = async ({ id }) => {
+  confirm('確認刪除')
+  toggleLoading(true)
   try {
     const res = await apiDeleteProductItem(id)
     if (res.data.success) {
       fetchProductData()
     }
   } catch (error) {
-    $vErrorNotice()
-    // $vLoading(false)
+    addNotifications({ message: error.response.message || '系統發生異常', type: 'danger' })
   }
+  toggleLoading(false)
 }
 const submitProductItem = async ({ isNew, content }) => {
   try {
-    // $vLoading(true)
+    toggleLoading(true)
     const productId = content.id
     const res = isNew
       ? await apiCreateProduct({ data: content })
@@ -108,11 +116,10 @@ const submitProductItem = async ({ isNew, content }) => {
   } catch (error) {
     $vErrorNotice()
   } finally {
-    // $vLoading(false)
+    toggleLoading(false)
   }
 }
 
-const checkInfo = () => {}
 // 新增 / 修改
 const handleProductItem = (item) => {
   currentProductItem.data = item
@@ -180,7 +187,7 @@ fetchProductData()
                 type="button"
                 class="btn btn-sm btn-danger text-white"
                 data-action="remove"
-                @click="checkInfo({ id: props.data.id, title: props.data.title })"
+                @click="deleteProductItem({ id: props.data.id, title: props.data.title })"
               >
                 刪除
               </button>

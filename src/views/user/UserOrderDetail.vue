@@ -1,6 +1,15 @@
 <script setup>
 import { apiUserGetOrder, apiUserPayment } from '@/api'
-import * as $filters from '../common/filters'
+import * as $filters from '@/common/filters'
+import useNotifications from '@/composable/useNotifications'
+import useLoading from '@/composable/useLoading'
+import Swal from 'sweetalert2'
+
+// loading
+const { toggleLoading } = useLoading()
+
+// notify
+const { addNotifications } = useNotifications()
 
 const $router = useRouter()
 const $route = useRoute()
@@ -9,35 +18,43 @@ const orderId = ref('')
 const detail = reactive({ data: {} })
 
 const getOrderInfo = async (orderId) => {
-  // this.$vLoading(true)
+  toggleLoading(true)
   try {
     const res = await apiUserGetOrder(orderId)
-    const { success, order } = res.data
+    const { success, order, message } = res.data
     if (success) {
       detail.data = order
     } else {
-      // this.$vHttpsNotice(res, '訂單')
+      addNotifications({ message, type: 'error' })
     }
-  } catch (error) {}
+  } catch (error) {
+    const message = error.response?.message || '系統發生異常'
+    addNotifications({ message, type: 'error' })
+  }
+  toggleLoading(false)
 }
 
 const payForOrder = async () => {
-  // this.$vLoading(true)
+  toggleLoading(true)
   try {
     const res = await apiUserPayment(orderId.value)
     const { success } = res.data
     if (success) {
-      // this.$vLoading(false)
-      detail.total.is_paid = true
-      // this.$swal({
-      //   title: '付款完成',
-      //   icon: 'success',
-      //   button: '確認',
-      // })
+      toggleLoading(false)
+      detail.data.is_paid = true
+      Swal.fire({
+        title: '付款完成',
+        icon: 'success',
+        button: '確認',
+      })
     } else {
-      // this.$vHttpsNotice(res, '付款')
+      addNotifications({ message, type: 'error' })
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+    const message = error.response?.message || '系統發生異常'
+    addNotifications({ message, type: 'error' })
+  }
 }
 
 const init = () => {
@@ -54,17 +71,12 @@ init()
 
 <template>
   <div class="container py-5">
-    <nav aria-label="breadcrumb mb-4">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Order</li>
-      </ol>
-    </nav>
+    <PageTitle />
     <div class="container py-lg-4 mb-8 mb-lg-0">
       <div class="text-center mb-7">
         <div class="d-flex justify-content-center align-items-center mb-5">
           <div class="me-3 bg-success rounded-circle p-2">
-            <SvgIcon name="done" width="30" height="30" normal="white" />
+            <SvgIcon name="done" width="30" height="30" color="white" :need-hover="false" />
           </div>
           <div>
             <h5 class="mb-1">感謝您！您的訂單已建立完成</h5>

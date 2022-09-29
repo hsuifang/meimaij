@@ -25,8 +25,9 @@ const starsList = computed(() => {
       v-for="(star, idx) in starsList"
       :key="`${idx}${star}`"
       :name="star"
-      width="20"
-      height="20"
+      width="16"
+      height="16"
+      color="orange"
       class="me-1"
     />
   </div>

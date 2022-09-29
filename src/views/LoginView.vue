@@ -1,6 +1,14 @@
 <script setup>
 import JWT from '@/api/cookies'
 import { apiSignIn } from '@/api'
+import useLoading from '../composable/useLoading'
+import useNotifications from '../composable/useNotifications'
+
+// loading
+const { toggleLoading } = useLoading()
+
+// notify
+const { addNotifications } = useNotifications()
 
 // router
 const router = useRouter()
@@ -16,19 +24,20 @@ const isButtonValid = computed(() => {
 })
 
 const handleLogin = async ({ username, password }) => {
-  // TODO: vLoading
+  toggleLoading(true)
   try {
     const res = await apiSignIn({ username, password })
-    const { success, token } = res.data
+    const { success, token, message } = res.data
     if (success) {
       JWT.saveToken(token)
       router.push({ name: 'admin-product' })
     } else {
-      // TODO: Notice
+      addNotifications({ message, type: 'danger' })
     }
   } catch (error) {
-    // TODO: Notice
+    addNotifications({ message: error.response.message, type: 'danger' })
   }
+  toggleLoading(false)
 }
 </script>
 

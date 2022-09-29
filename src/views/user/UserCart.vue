@@ -1,6 +1,6 @@
 <script setup>
-import { useCartStore } from '../stores/cart'
-import * as $filters from '../common/filters'
+import { useCartStore } from '@/stores/cart'
+import * as $filters from '@/common/filters'
 // handle cart event
 const $store = useCartStore()
 
@@ -9,6 +9,7 @@ const couponCode = ref('')
 
 // carts list
 const columns = [
+  { name: 'img', label: '圖片' },
   { name: 'title', label: '名稱' },
   { name: 'price', label: '金額' },
   { name: 'qty', label: '數量' },
@@ -23,6 +24,7 @@ const pageInfo = ref({
 <template>
   <!-- 購物車 -->
   <div class="container pt-0 pb-4 pt-lg-3 py-lg-6">
+    <PageTitle class="mt-3" />
     <div class="row mt-4 mb-4">
       <div class="col-lg-12">
         <div class="py-3 p-md-5 bg-white rounded border">
@@ -36,15 +38,17 @@ const pageInfo = ref({
             </button>
           </div>
           <AppTable :columns="columns" :values="carts" :pages="pageInfo">
+            <template #img="{ data }">
+              <img
+                :src="data.product.imageUrl"
+                alt="商品主要圖片"
+                width="80"
+                height="80"
+                class="obj-fit-contain"
+              />
+            </template>
             <template #title="{ data }">
               <div class="p-2">
-                <img
-                  :src="data.product.imageUrl"
-                  alt="商品主要圖片"
-                  width="120"
-                  height="120"
-                  class="img-fluid me-5 obj-fit-contain"
-                />
                 <div class="ml-3 d-inline-block align-middle">
                   <h5 class="fs-6 6mb-0 text-dark">{{ data.product.title }}</h5>
                   <p class="fs-8 text-muted font-weight-normal fst-italic mb-2">

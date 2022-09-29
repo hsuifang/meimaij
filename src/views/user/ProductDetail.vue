@@ -1,8 +1,15 @@
 <script setup>
 import { apiGetSpecficProduct } from '@/api'
-import { useProductStore } from '../stores/products'
-import { useCartStore } from '../stores/cart'
-import { useFavorite } from '../composable/useFavorite'
+import { useProductStore } from '@/stores/products'
+import { useCartStore } from '@/stores/cart'
+import { useFavorite } from '@/composable/useFavorite'
+import useNotifications from '@/composable/useNotifications'
+import useLoading from '@/composable/useLoading'
+
+// loading
+const { toggleLoading } = useLoading()
+// notify
+const { addNotifications } = useNotifications()
 
 const $productStore = useProductStore()
 const $cartStore = useCartStore()
@@ -20,8 +27,8 @@ const itemNumber = ref(1)
 const productDetail = ref({})
 
 const showProductDetail = async (id) => {
+  toggleLoading(true)
   try {
-    // this.$vLoading(true);
     const res = await apiGetSpecficProduct(id)
     const { success, product } = res.data
     if (success) {
@@ -31,22 +38,20 @@ const showProductDetail = async (id) => {
         mainImage: product.imageUrl,
       }
     } else {
-      // this.$vHttpsNotice(res, '查看產品');
+      addNotifications({ message, type: 'danger' })
     }
   } catch (error) {
-    // this.$vErrorNotice()
+    addNotifications({ message: error.response.message, type: 'danger' })
   }
+  toggleLoading(false)
 }
 // favorite
 const { toggleFavorite, initFavorite, isFavorite } = useFavorite()
-const addToFavorite = (id) => {
-  toggleFavorite(id)
-}
+
 onMounted(() => {
   initFavorite(productDetail.id)
 })
 
-//
 showProductDetail(route.params.id)
 </script>
 
@@ -116,7 +121,7 @@ showProductDetail(route.params.id)
               ><button
                 type="button"
                 class="btn btn-outline-info"
-                @click.stop="addToFavorite(productDetail)"
+                @click.stop="toggleFavorite(productDetail)"
               >
                 <SvgIcon
                   v-show="isFavorite"

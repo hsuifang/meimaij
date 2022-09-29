@@ -1,4 +1,5 @@
 <script setup>
+import * as $filters from '../common/filters'
 import { useCartStore } from '../stores/cart'
 
 const props = defineProps({
@@ -41,7 +42,7 @@ $store.fetchCartList()
         </div>
         <div class="w-75 ms-3">
           <h3 class="h6 mb-1">{{ item.product.title }}</h3>
-          <p class="fw-bold text-info">{{ item.product.price }}</p>
+          <p class="fw-bold text-info">{{ $filters.currency(item.product.price) }}</p>
           <div class="d-flex justify-content-between align-items-end">
             <div class="fw-bold">
               <a href="#" class="pe-2" @click.prevent="minusCartQty(item)">
@@ -81,7 +82,7 @@ $store.fetchCartList()
             購買<span class="text-secondary px-2">{{ carts.length }}</span
             >項產品
           </p>
-          <h4 class="py-3">總共：{{ $store.price.final }}</h4>
+          <h4 class="py-3">總共：{{ $filters.currency($store.price.final) }}</h4>
           <template v-if="carts.length !== 0">
             <button
               type="button"

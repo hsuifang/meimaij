@@ -5,7 +5,7 @@
   <div class="masthead d-flex flex-column justify-content-center">
     <div class="container">
       <div class="p-3">
-        <div class="typing">Witamy! Idziesz ze nami</div>
+        <div class="typing">歡迎光臨 | MeiMaij 鎂麥生食小舖</div>
       </div>
     </div>
   </div>
@@ -13,9 +13,9 @@
 
 <style scoped lang="scss">
 .typing {
-  width: 21ch;
+  width: 27ch;
   color: white;
-  animation: typing 2s steps(21), blink 0.5s step-end infinite alternate;
+  animation: typing 2s steps(27), blink 0.5s step-end infinite alternate;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid #ea8484;
@@ -49,7 +49,7 @@
     white-space: nowrap;
     overflow: hidden;
     border-right: 3px solid #ea8484;
-    font-size: 1.5em;
+    font-size: 1.2em;
     background: rgba(0, 0, 0, 0.2);
     padding: 0 1rem;
   }

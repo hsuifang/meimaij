@@ -13,26 +13,21 @@ getFavaorite()
 
 <template>
   <div v-if="favoriteProducts.data.length > 0">
-    <ul class="d-flex px-3 py-2 mb-4 bg-light" data-discript="filterViewType">
-      <li class="me-3">
-        <a href="#" data-view="product-grid" @click.prevent="productView = 'grid'"
-          ><i
-            class="bi bi-grid fs-4 fw-bold"
-            :class="{ 'text-primary': productView === 'grid' }"
-          ></i
-        ></a>
-      </li>
-      <li>
-        <a href="#" data-view="product-list" @click.prevent="productView = 'list'"
-          ><i
-            class="bi bi-list fs-4 fw-bold"
-            :class="{ 'text-primary': productView === 'list' }"
-          ></i
-        ></a>
-      </li>
-    </ul>
+    <div class="d-flex align-items-center me-3 justify-content-end">
+      <a href="#" class="p-2 bg-light me-1" @click.prevent="cardStyle = 'grid'"
+        ><SvgIcon name="grid" width="24" height="24"
+      /></a>
+      <a href="#" class="p-2 bg-light" @click.prevent="cardStyle = 'list'"
+        ><SvgIcon name="list" width="24" height="24"
+      /></a>
+    </div>
     <ul class="row mb-6">
-      <li v-for="product in favoriteProducts.data" :key="product?.id">
+      <li
+        :class="cardStyle === 'list' ? 'py-3  border-bottom col-12' : 'col-6 col-lg-4'"
+        v-for="product in favoriteProducts.data"
+        :key="product?.id"
+        @click="$router.push({ name: 'shop-detail', params: { id: product.id } })"
+      >
         <ProductCard
           statusPos="vr"
           :product="product"

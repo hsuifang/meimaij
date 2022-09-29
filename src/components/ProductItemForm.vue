@@ -1,5 +1,8 @@
 <script setup>
 import { apiCreateProduct, apiUpdateProduct } from '@/api'
+import useLoading from '../composable/useLoading'
+const { toggleLoading } = useLoading()
+
 const props = defineProps({
   isCreate: {
     type: Boolean,
@@ -35,7 +38,7 @@ let currentProductItem = ref({})
 
 const submitProductItem = async () => {
   try {
-    // this.$vLoading(true);
+    toggleLoading(true)
     const product = currentProductItem.value
     const res = !product.id
       ? await apiCreateProduct({ data: product })
@@ -46,11 +49,9 @@ const submitProductItem = async () => {
     }
   } catch (error) {
     // this.$vErrorNotice();
-  } finally {
-    // this.$vLoading(false);
   }
+  toggleLoading(false)
 }
-
 // valid check
 const isButtonValid = computed(() => {
   const requireItem = ['title', 'category', 'unit', 'origin_price', 'price']
@@ -60,7 +61,6 @@ const isButtonValid = computed(() => {
 watch(
   () => props.productItem,
   (val) => {
-    console.log(val)
     currentProductItem.value = { ...val }
   }
 )

@@ -54,6 +54,7 @@
   }
   &-image {
     img {
+      width: 100%;
       height: 350px;
       object-fit: cover;
     }
@@ -240,4 +241,33 @@ ul {
     color: $primary;
     border-bottom: 3px solid $primary;
   }
+}
+
+//
+.mobile-collapse {
+  display: none;
+  position: absolute;
+  top: 60px;
+  background: white;
+  height: 0;
+  width: 100%;
+  transition: top 1s;
+  overflow: hidden;
+  .nav-link.active::after {
+    content: '';
+  }
+}
+@include media-breakpoint-down(lg) {
+  .mobile-collapse {
+    display: block;
+    transition: height 0.7s;
+    &.show {
+      height: 120px;
+    }
+  }
+}
+
+// swal
+.swal2-styled.swal2-confirm {
+  background-color: $primary !important;
 }

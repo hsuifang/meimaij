@@ -1,7 +1,16 @@
 <script setup>
-import { useCartStore } from '../stores/cart'
-import * as $filters from '../common/filters'
+import { useCartStore } from '@/stores/cart'
+import * as $filters from '@/common/filters'
 import { apiGenerateOrder, apiApplyCoupon } from '@/api'
+
+import useNotifications from '@/composable/useNotifications'
+import useLoading from '@/composable/useLoading'
+
+// loading
+const { toggleLoading } = useLoading()
+
+// notify
+const { addNotifications } = useNotifications()
 
 const $store = useCartStore()
 const $router = useRouter()
@@ -17,45 +26,38 @@ const applyCoupon = async () => {
     const res = await apiApplyCoupon(this.couponCode)
     if (res.data.success) {
       this.fetchCartList()
+      addNotifications({ message, type: 'success' })
     }
     this.couponCode = ''
-    // this.$vHttpsNotice(res, '使用優惠券')
   } catch (error) {
-    // this.$vErrorNotice()
-  } finally {
-    // this.toggleLoding({ pos: '' })
+    addNotifications({ message: error.response?.message, type: 'danger' })
   }
 }
 
 const handleSubmit = async () => {
-  // this.toggleLoding({ pos: 'requestOrder' })
+  toggleLoading(true)
   try {
     const res = await apiGenerateOrder({
       user,
       message: userMessage,
     })
-    const { success, orderId } = res.data
+    const { success, orderId, message } = res.data
     if (success) {
-      // this.$vHttpsNotice(res, '送出訂單')
-      // this.emitter.emit('updateCart', { volume: 0 })
+      addNotifications({ message, type: 'success' })
       $router.push(`/order/${orderId}`)
     } else {
-      // this.$vHttpsNotice(res, '送出訂單')
+      addNotifications({ message, type: 'danger' })
     }
   } catch (error) {
-    // this.$vErrorNotice()
+    addNotifications({ message: error.response.message, type: 'danger' })
   }
+  toggleLoading(false)
 }
 </script>
 
 <template>
   <div class="container py-5">
-    <nav aria-label="breadcrumb mb-4">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Library</li>
-      </ol>
-    </nav>
+    <PageTitle />
 
     <VForm @submit="handleSubmit" ref="form" v-slot="{ errors }" class="py-3">
       <div class="row gx-lg-5">

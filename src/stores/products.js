@@ -1,5 +1,13 @@
 import { defineStore } from 'pinia'
 import { apiGetProductsAll } from '@/api'
+import useLoading from '../composable/useLoading'
+import useNotifications from '../composable/useNotifications'
+
+// loading
+const { toggleLoading } = useLoading()
+
+// notify
+const { addNotifications } = useNotifications()
 
 function randomFloorNum(max) {
   return Math.floor(Math.random() * max)
@@ -50,6 +58,7 @@ export const useProductStore = defineStore({
   actions: {
     async fetchValidProducts() {
       try {
+        toggleLoading(true)
         const res = await apiGetProductsAll()
         const { products, success } = res.data
         if (success) {
@@ -59,8 +68,10 @@ export const useProductStore = defineStore({
           }))
         }
       } catch (error) {
-        // TODO
+        const message = error.response?.message || '系統發生異常'
+        addNotifications({ message, type: 'error' })
       }
+      toggleLoading(false)
     },
   },
 })

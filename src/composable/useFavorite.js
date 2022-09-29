@@ -1,5 +1,7 @@
 import { filter, find } from 'lodash'
 import { ref } from 'vue'
+import useNotifications from '../composable/useNotifications'
+const { addNotifications } = useNotifications()
 
 export function useFavorite() {
   const isFavorite = ref(false)
@@ -28,19 +30,16 @@ export function useFavorite() {
         isFavorite.value = true
       }
     }
-
-    // this.emitter.emit('notice-message', {
-    //   style: 'success',
-    //   title: `${this.isFavorite ? '加入' : '移除'}收藏`,
-    // })
+    addNotifications({
+      message: `${isFavorite.value ? '加入' : '移除'}收藏成功`,
+      type: 'success',
+      timeout: 2000,
+    })
   }
 
   const initFavorite = (productId) => {
     const favoriteProducts = getFavoriteProducts(storageKey)
-    const item = find(favoriteProducts, (item) => item.id === productId)
-
     if (find(favoriteProducts, (item) => item.id === productId)) {
-      console.log(item)
       isFavorite.value = true
     }
   }

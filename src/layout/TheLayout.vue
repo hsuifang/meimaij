@@ -1,6 +1,8 @@
 <template>
-  <TheHeader />
-  <router-view />
+  <div class="min-vh-90">
+    <TheHeader />
+    <router-view />
+  </div>
   <section>
     <TheFooter />
   </section>

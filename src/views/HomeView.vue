@@ -1,9 +1,28 @@
 <script setup>
-// fadeInDown
 import { useProductStore } from '../stores/products'
 const $store = useProductStore()
 
-$store.fetchValidProducts()
+if (!$store.products.length) {
+  $store.fetchValidProducts()
+}
+
+const replyByClients = [
+  {
+    name: '飼養黃金獵犬陳先生',
+    message: '我家挑食的小寶貝超級愛',
+    product: '雞肉乾糧',
+  },
+  {
+    name: '飼養博美許花',
+    message: '一邊玩樂一邊清潔，嘴巴香香',
+    product: '潔牙骨',
+  },
+  {
+    name: '飼養米克斯台北yoyo',
+    message: '看他吃得很開心，我就很開心',
+    product: '生食',
+  },
+]
 </script>
 
 <template>
@@ -16,7 +35,7 @@ $store.fetchValidProducts()
         <li class="col-8 col-md-4 col-lg-3 mb-3" v-animate="{ name: 'fadeInDown' }">
           <div class="benefit">
             <div class="benefit-img">
-              <SvgIcon name="chat" width="20" height="20" />
+              <SvgIcon name="chat" width="20" height="20" :need-hover="false" />
             </div>
             <div class="benefit-content">
               <h2 class="benefit-title">LINE 服務</h2>
@@ -27,7 +46,7 @@ $store.fetchValidProducts()
         <li class="col-8 col-md-4 col-lg-3 mb-3" v-animate="{ name: 'fadeInDown' }">
           <div class="benefit">
             <div class="benefit-img">
-              <SvgIcon name="chat" width="20" height="20" />
+              <SvgIcon name="money" width="20" height="20" :need-hover="false" />
             </div>
             <div class="benefit-content">
               <h2 class="benefit-title">滿額免運</h2>
@@ -38,7 +57,7 @@ $store.fetchValidProducts()
         <li class="col-8 col-md-4 col-lg-3" v-animate="{ name: 'fadeInDown' }">
           <div class="benefit">
             <div class="benefit-img">
-              <SvgIcon name="chat" width="20" height="20" />
+              <SvgIcon name="transport" width="20" height="20" :need-hover="false" />
             </div>
             <div class="benefit-content">
               <h2 class="benefit-title">快速配送</h2>
@@ -130,7 +149,7 @@ $store.fetchValidProducts()
           <li class="col-md-4" v-animate="{ name: 'fadeInDown', delay: '.8s' }">
             <div class="py-md-5 collection-image">
               <img
-                src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1628178875634.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=HnnSrmmC8A2InAdKJzuWE4ogBBJ08UOkuXa94Wb9i%2FbZPLPvJ19ZIYHh5cT0b66RpA8uFXa2l6IWbSXGNcCI%2FaUCSKHHYqB0hZtlagEJ5SuMEds67tiv2Ib4vQHc%2BYHf%2FhBoip6JwTXfCn%2BhGSsg3dYKiRsyfMuQJOsynNBnxKgobrqpslMkku9IhTWk4iYmZPqz%2Bb8duW6pH2ST8QE0p6Y0houYgOhDq4DyFKqKfIFcXhJRGv2w9K6K%2Bpy%2F6OLk3Qb8YPMpycCOzeJoSuNhjCVB17v2zbXVk4B9dTnOw8nklYOtT%2BcmavdhvqaGSROaAN%2F5OwrSCfpK%2FXoLfr15Sw%3D%3D"
+                src="https://storage.googleapis.com/vue-course-api.appspot.com/hsuifangfangfang/1625930551747.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=YmtE1Mj47FLscF%2BpmVpfSBWdsCpkeIzjQNNe653EX9ZAir2NL5WVgkhx0b1ujv%2BUmwHOPVcjdHX7nZMeH8jYRvCo%2F1%2FQDNghueY77Q%2FUiFPFKwpqWf32DvDIww03vJEJmyNojF3ruFsqmettoaNh6mEf3oSCyl8tyDbDz7aoIWSo2aF1WcwdL4VNbURBFpisOSrp6xOOUbrwCYF41ikbRbsff4wgtE8EdRV5q0%2BZHpKBw5Dx%2B9QhyZtnbo13RZ8%2FpcHpeBgIh5Xvj1WWHJMmpEUNOxPPG7CU9VeIk5QQ1kil9qeH6XBHQ9LlQ7E9t%2FYu2tFhwdqcG0zqOWTFR94WXw%3D%3D"
                 alt="collection-image"
               />
             </div>
@@ -194,12 +213,12 @@ $store.fetchValidProducts()
     <div class="container py-4 py-lg-8">
       <h2 class="text-center mb-3 mb-lg-5">購買者心得</h2>
       <div class="row pt-3">
-        <div class="col-lg-4 mb-5 mb-lg-0" v-for="i in 3" :key="i">
+        <div class="col-lg-4 mb-5 mb-lg-0" v-for="reply in replyByClients" :key="reply">
           <div class="pin shadow px-5 py-4 pb-3 bg-white">
             <div class="d-flex align-items-center">
               <div class="w-25">
                 <img
-                  src="@/assets/logo.svg"
+                  src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
                   alt="avator"
                   width="50"
                   height="50"
@@ -207,11 +226,11 @@ $store.fetchValidProducts()
                 />
               </div>
               <div>
-                <h6 class="mb-1 ls-1">飼養黃金獵犬陳先生</h6>
-                <p class="text-info">我家挑食的小寶貝超級愛</p>
+                <h6 class="mb-1 ls-1">{{ reply.name }}</h6>
+                <p class="text-info">{{ reply.message }}</p>
               </div>
             </div>
-            <h4 class="fs-5 mt-3 ls-2 fw-bold text-secondary text-end">購買雞肉乾糧</h4>
+            <h5 class="fs-6 mt-3 ls-2 text-secondary text-end">購買{{ reply.product }}</h5>
           </div>
         </div>
       </div>

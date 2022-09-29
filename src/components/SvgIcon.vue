@@ -1,37 +1,72 @@
 <script setup>
+import { startCase, split, join } from 'lodash'
+
 const props = defineProps({
   name: {
     type: String,
     required: true,
   },
-  prefix: {
+  color: {
     type: String,
-    default: 'icon',
+    default: '#b86868',
   },
-  normal: {
+  size: {
     type: String,
-    default: '#333',
+    default: '1rem',
   },
-  hover: {
-    type: String,
-    default: '#ea8484',
+  needHover: {
+    type: Boolean,
+    default: true,
   },
-  className: {
+  hoverType: {
     type: String,
+    default: 'light',
+    validator: (val) => ['light', 'dark'].indexOf(val) !== -1,
   },
 })
-const color = ref('')
-const svgName = computed(() => `#/${props.prefix}-${props.name}`)
-const svgClass = computed(() => (props.className ? 'svg-icon ' + props.className : 'svg-icon'))
+const icons = [
+  'cart',
+  'chat',
+  'done',
+  'favorite',
+  'favorite-fill',
+  'github',
+  'linkin',
+  'portfolio',
+  'star',
+  'star-fill',
+  'star-half',
+  'twitter',
+  'minus',
+  'plus',
+  'grid',
+  'list',
+  'trash',
+  'transport',
+  'money',
+]
+const iconExist = computed(() => icons.includes(props.name))
 
-onMounted(() => {
-  color.value = props.normal
+const svgName = computed(() => {
+  const firstLetterUpperCase = startCase(props.name)
+  const splitLetter = split(firstLetterUpperCase, ' ')
+  return `Icon${join(splitLetter, '')}`
 })
+
+const DynamicSvg = defineAsyncComponent(() => import(`./icons/${svgName.value}.vue`))
 </script>
 
 <template>
-  <svg :class="svgClass" @mouseenter="color = hover" @mouseleave="color = normal">
-    <use :xlink:href="svgName" :fill="color" />
+  <svg
+    v-if="iconExist"
+    :aria-labelledby="name"
+    :width="size"
+    :height="size"
+    class="svg-icon"
+    :class="{ [hoverType]: needHover }"
+    :fill="color"
+  >
+    <DynamicSvg :fill="color" width="100%" height="100%" :class="{ [hoverType]: needHover }" />
   </svg>
 </template>
 
@@ -40,5 +75,15 @@ onMounted(() => {
   max-width: 100px;
   max-height: 100px;
   overflow: hidden;
+  fill: currentColor;
+}
+svg:hover {
+  border-radius: 8px;
+}
+svg.light:hover {
+  background: #feebeb;
+}
+svg.dark:hover {
+  background: #b86868;
 }
 </style>
