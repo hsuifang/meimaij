@@ -15,7 +15,7 @@ const addNotifications = ({ message, timeout = 3000, type }) => {
 
 const removeNotifications = (id) => {
   const index = notifications.data.findIndex((item) => item.id === id)
-  notifications.splice(index, 1)
+  notifications.data.splice(index, 1)
 }
 
 const removeAll = () => {

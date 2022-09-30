@@ -9,7 +9,7 @@ const { notifications, removeNotifications } = useNotifications()
       <div
         class="notification"
         :class="`notification-type-${notify.type}`"
-        v-for="notify in notifications"
+        v-for="notify in notifications.data"
         :key="notify.id"
       >
         <span>{{ notify.message }}</span>
