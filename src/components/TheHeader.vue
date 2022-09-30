@@ -25,9 +25,6 @@ watch(
         <router-link to="/" class="navbar-brand">MEIMAIJ</router-link>
         <div class="d-none d-md-block ms-3">
           <ul class="navbar-nav mt-2 mt-md-0">
-            <!-- <li class="nav-item mx-1">
-              <a class="nav-link" href="#">關於我們</a>
-            </li> -->
             <li class="nav-item mx-1">
               <router-link to="/" class="nav-link" aria-current="page">首頁</router-link>
             </li>

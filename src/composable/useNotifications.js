@@ -1,9 +1,9 @@
 import { reactive } from 'vue'
-const notifications = reactive([])
+const notifications = reactive({ data: [] })
 
 const addNotifications = ({ message, timeout = 3000, type }) => {
   const id = Math.random + Date.now()
-  notifications.push({
+  notifications.data.push({
     id,
     message,
     type,
@@ -14,12 +14,12 @@ const addNotifications = ({ message, timeout = 3000, type }) => {
 }
 
 const removeNotifications = (id) => {
-  const index = notifications.findIndex((item) => item.id === id)
+  const index = notifications.data.findIndex((item) => item.id === id)
   notifications.splice(index, 1)
 }
 
 const removeAll = () => {
-  notifications = reactive([])
+  notifications.data = []
 }
 
 export default function useNotifications() {

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import useNotifications from '../composable/useNotifications'
 import Layout from '../layout/TheLayout.vue'
 import HomeView from '../views/HomeView.vue'
@@ -7,7 +7,7 @@ import LoginView from '../views/LoginView.vue'
 const { removeAll, notifications } = useNotifications()
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
