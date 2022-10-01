@@ -41,7 +41,7 @@ const showProductDetail = async (id) => {
       addNotifications({ message, type: 'danger' })
     }
   } catch (error) {
-    addNotifications({ message: error.response.message, type: 'danger' })
+    addNotifications({ message: error.response?.message, type: 'danger' })
   }
   toggleLoading(false)
 }
@@ -65,7 +65,7 @@ showProductDetail(route.params.id)
         </ol>
       </nav>
     </div>
-    <div class="product-detail mb-3">
+    <div class="product-detail mb-3 px-3 px-md-0">
       <div class="product-detail-main mb-3 mb-lg-5">
         <div class="product-detail-cover">
           <div class="product-detail-image mb-2">
@@ -83,7 +83,7 @@ showProductDetail(route.params.id)
           </ul>
         </div>
         <div class="product-detail-content">
-          <div class="py-5 ps-lg-5 border-bottom">
+          <div class="py-3 py-md-5 ps-lg-5 border-bottom">
             <h2 class="mb-1">{{ productDetail.title }}</h2>
             <div class="mb-3">
               <ProductItemRate :rate="+productDetail.rate || 0" />

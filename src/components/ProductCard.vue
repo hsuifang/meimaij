@@ -63,7 +63,7 @@ onMounted(() => {
     <div class="product-card-body">
       <div class="product-card-content">
         <div :class="{ 'd-flex justify-content-between ': props.direction !== 'horizontal' }">
-          <h6 class="text-secondary" :class="{ 'fs-5': props.direction === 'horizontal' }">
+          <h6 class="text-secondary" :class="{ 'fs-6 fs-md-5': props.direction === 'horizontal' }">
             {{ product.title }}
           </h6>
         </div>
@@ -71,12 +71,14 @@ onMounted(() => {
           <ProductItemRate :rate="+product.rate || 0" />
         </div>
         <div class="d-flex align-items-center">
-          <p class="fs-6 me-2">NT$ {{ product.price }}</p>
-          <p class="text-gray-500 fs-7">
+          <p class="fs-7 fs-md-6 me-2">NT$ {{ product.price }}</p>
+          <p class="text-gray-500 fs-7 d-none d-md-block">
             <del>NT$ {{ product.origin_price }} </del>
           </p>
         </div>
-        <p v-show="props.direction === 'horizontal'">{{ product.description }}</p>
+        <p class="d-none" :class="{ 'd-md-block': props.direction === 'horizontal' }">
+          {{ product.description }}
+        </p>
       </div>
     </div>
     <div class="product-card-footer">

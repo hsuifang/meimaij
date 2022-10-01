@@ -90,7 +90,7 @@ const deleteProductItem = async ({ id }) => {
       fetchProductData()
     }
   } catch (error) {
-    addNotifications({ message: error.response.message || '系統發生異常', type: 'danger' })
+    addNotifications({ message: error.response?.message || '系統發生異常', type: 'danger' })
   }
   toggleLoading(false)
 }

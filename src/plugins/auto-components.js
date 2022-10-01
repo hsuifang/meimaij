@@ -33,6 +33,7 @@ declare module '@vue/runtime-core' {
     IconTransport: typeof import('./../components/icons/IconTransport.vue')['default']
     IconTrash: typeof import('./../components/icons/IconTrash.vue')['default']
     IconTwitter: typeof import('./../components/icons/IconTwitter.vue')['default']
+    MobileActionArea: typeof import('./../components/MobileActionArea.vue')['default']
     PageTitle: typeof import('./../components/PageTitle.vue')['default']
     ProductCard: typeof import('./../components/ProductCard.vue')['default']
     ProductItemForm: typeof import('./../components/ProductItemForm.vue')['default']

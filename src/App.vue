@@ -6,9 +6,9 @@ const { isLoading } = useLoading()
 </script>
 <template>
   <AppHead />
-  <RouterView />
   <AppNotification />
   <AppSpinner v-if="isLoading" />
+  <RouterView v-show="!isLoading" />
 </template>
 
 <style lang="scss">

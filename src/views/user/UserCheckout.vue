@@ -49,7 +49,7 @@ const handleSubmit = async () => {
       addNotifications({ message, type: 'danger' })
     }
   } catch (error) {
-    addNotifications({ message: error.response.message, type: 'danger' })
+    addNotifications({ message: error.response?.message, type: 'danger' })
   }
   toggleLoading(false)
 }
@@ -59,10 +59,10 @@ const handleSubmit = async () => {
   <div class="container py-5">
     <PageTitle />
 
-    <VForm @submit="handleSubmit" ref="form" v-slot="{ errors }" class="py-3">
+    <VForm @submit="handleSubmit" ref="form" v-slot="{ errors }" class="py-md-3">
       <div class="row gx-lg-5">
         <div class="col-lg-6">
-          <h3 class="h5 mb-md-4 border-start border-4 border-primary ps-3 py-2">購買者資訊</h3>
+          <h3 class="h5 mb-3 mb-md-4 border-start border-4 border-primary ps-3 py-2">購買者資訊</h3>
           <div class="mb-3 mb-lg-4">
             <label for="name" class="form-label">姓名</label>
             <VField

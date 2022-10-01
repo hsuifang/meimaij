@@ -5,6 +5,7 @@
   </div>
   <section>
     <TheFooter />
+    <MobileActionArea />
   </section>
 </template>
 

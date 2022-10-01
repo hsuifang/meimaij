@@ -35,7 +35,7 @@ const handleLogin = async ({ username, password }) => {
       addNotifications({ message, type: 'danger' })
     }
   } catch (error) {
-    addNotifications({ message: error.response.message, type: 'danger' })
+    addNotifications({ message: error.response?.message, type: 'danger' })
   }
   toggleLoading(false)
 }

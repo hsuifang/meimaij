@@ -25,7 +25,7 @@ const pageInfo = ref({
   <!-- 購物車 -->
   <div class="container pt-0 pb-4 pt-lg-3 py-lg-6">
     <PageTitle class="mt-3" />
-    <div class="row mt-4 mb-4">
+    <div class="row my-2 my-4">
       <div class="col-lg-12">
         <div class="py-3 p-md-5 bg-white rounded border">
           <div v-if="carts.length > 0" class="d-flex justify-content-end mb-2">
@@ -50,8 +50,8 @@ const pageInfo = ref({
             <template #title="{ data }">
               <div class="p-2">
                 <div class="ml-3 d-inline-block align-middle">
-                  <h5 class="fs-6 6mb-0 text-dark">{{ data.product.title }}</h5>
-                  <p class="fs-8 text-muted font-weight-normal fst-italic mb-2">
+                  <h5 class="fs-8 fs-md-6 mb-0 text-dark">{{ data.product.title }}</h5>
+                  <p class="d-none d-md-block fs-8 text-muted font-weight-normal fst-italic mb-2">
                     類別: {{ data.product.category }}
                   </p>
                   <div v-if="data.coupon" class="text-muted fs-8">
@@ -109,25 +109,19 @@ const pageInfo = ref({
               v-model="couponCode"
             />
             <div>
-              <!-- @click="applyCoupon" -->
               <button type="button" class="btn btn-secondary text-white" :disabled="!couponCode">
                 <i class="bi bi-gift text-white me-2"></i>優惠碼
               </button>
-              <!-- v-if="loadingItem.pos === 'applyCoupon'" -->
-              <!-- <div
-                class="spinner-border spinner-border-sm position-absolute top-50 start-100"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div> -->
             </div>
           </div>
         </div>
       </div>
     </div>
-    <ul class="text-end pt-5 pb-3 border-bottom" v-if="carts.length > 0">
-      <li class="mb-4">小計: {{ $filters.currency($store.price.total) }}</li>
-      <li class="mb-4">折扣: {{ $filters.currency($store.price.total - $store.price.final) }}</li>
+    <ul class="text-end pt-2 pt-md-5 pb-3 border-bottom" v-if="carts.length > 0">
+      <li class="mb-2 mb-md-4">小計: {{ $filters.currency($store.price.total) }}</li>
+      <li class="mb-2 mb-md-4">
+        折扣: {{ $filters.currency($store.price.total - $store.price.final) }}
+      </li>
       <li class="mb-4">
         總計: <span class="fw-bold">{{ $filters.currency($store.price.final) }}</span>
       </li>

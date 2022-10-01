@@ -24,6 +24,7 @@ const { notifications, removeNotifications } = useNotifications()
   position: fixed;
   top: 100px;
   right: 0;
+  z-index: 1;
 }
 .notification {
   background: white;

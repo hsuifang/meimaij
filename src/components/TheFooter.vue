@@ -1,6 +1,6 @@
 <template>
-  <footer class="border-top">
-    <div class="py-6">
+  <footer class="border-top pb-4 pb-md-0">
+    <div class="pt-3 pb-6 py-md-6">
       <ul class="list-unstyled list-unstyled d-flex justify-content-center mb-2 mb-lg-3">
         <li class="me-3">
           <a href="https://www.linkedin.com/in/ifang-hsu-101bb6160/" target="_blank"

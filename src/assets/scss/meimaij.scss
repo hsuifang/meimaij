@@ -178,6 +178,9 @@
   }
   &-image {
     height: 400px;
+    @include media-breakpoint-down(md) {
+      height: 300px;
+    }
     img {
       height: 100%;
       object-fit: cover;

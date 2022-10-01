@@ -79,22 +79,22 @@ init()
             <SvgIcon name="done" width="30" height="30" color="white" :need-hover="false" />
           </div>
           <div>
-            <h5 class="mb-1">感謝您！您的訂單已建立完成</h5>
+            <h5 class="mb-1 d-none d-md-block">感謝您！您的訂單已建立完成</h5>
             <p class="text-info">訂單編號: {{ orderId }}</p>
           </div>
         </div>
-        <ul class="row g-0 py-5 bg-light">
+        <ul class="row g-0 py-3 py-md-5 bg-light">
           <li class="col-4">
             <p class="text-gray-500">訂購日期</p>
-            <h5>{{ detail.data.create_at }}</h5>
+            <h5 class="fs-6 fs-md-5">{{ detail.data.create_at }}</h5>
           </li>
           <li class="col-4">
             <p class="text-gray-500">總計</p>
-            <h5>{{ $filters.currency(detail.data.total) }}</h5>
+            <h5 class="fs-6 fs-md-5">{{ $filters.currency(detail.data.total) }}</h5>
           </li>
           <li class="col-4">
             <p class="text-gray-500">付款狀態</p>
-            <h5>{{ detail.data.is_paid ? '已付款' : '未付款' }}</h5>
+            <h5 class="fs-6 fs-md-5">{{ detail.data.is_paid ? '已付款' : '未付款' }}</h5>
           </li>
         </ul>
       </div>

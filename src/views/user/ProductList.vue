@@ -65,7 +65,7 @@ const setSearchName = (val) => {
       </div>
 
       <div class="col-12 col-lg-9">
-        <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+        <div class="d-flex justify-content-between align-items-center mb-md-3 px-2">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#" @click="$router.push('/')">首頁</a></li>
@@ -73,7 +73,7 @@ const setSearchName = (val) => {
             </ol>
           </nav>
           <div class="d-flex align-items-center">
-            <div class="d-flex align-items-center me-3">
+            <div class="d-flex align-items-center">
               <a href="#" class="p-2 bg-light me-1" @click.prevent="cardStyle = 'grid'"
                 ><SvgIcon name="grid" width="24" height="24"
               /></a>
@@ -81,11 +81,6 @@ const setSearchName = (val) => {
                 ><SvgIcon name="list" width="24" height="24"
               /></a>
             </div>
-            <!-- TODO -->
-            <!-- <select class="form-select">
-              <option value="0">價格: 低到高</option>
-              <option value="1">價格: 高到低</option>
-            </select> -->
           </div>
         </div>
         <ul class="row">
